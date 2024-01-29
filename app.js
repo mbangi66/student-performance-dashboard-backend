@@ -96,6 +96,73 @@ app.get('/api/schools/:id/performance', (req, res) => {
     });
   });
 
+// Create a new student
+app.post('/api/students', (req, res) => {
+    const newStudent = req.body;
+  
+    // Validate that the required information is present in the request body
+    if (!newStudent.school || !newStudent.sex || !newStudent.age) {
+      res.status(400).json({ error: 'Required information (school, sex, age) is missing for creating a new student' });
+      return;
+    }
+  
+    // Inserting the new student into the database
+    db.run(
+      'INSERT INTO Student (school, sex, age, address, famsize, Pstatus, Medu, Fedu, Mjob, Fjob, reason, guardian, traveltime, studytime, failures, schoolsup, famsup, paid, activities, nursery, higher, internet, romantic, famrel, freetime, goout, Dalc, Walc, health, absences, G1, G2, G3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        newStudent.school,
+        newStudent.sex,
+        newStudent.age,
+        newStudent.address,
+        newStudent.famsize,
+        newStudent.Pstatus,
+        newStudent.Medu,
+        newStudent.Fedu,
+        newStudent.Mjob,
+        newStudent.Fjob,
+        newStudent.reason,
+        newStudent.guardian,
+        newStudent.traveltime,
+        newStudent.studytime,
+        newStudent.failures,
+        newStudent.schoolsup,
+        newStudent.famsup,
+        newStudent.paid,
+        newStudent.activities,
+        newStudent.nursery,
+        newStudent.higher,
+        newStudent.internet,
+        newStudent.romantic,
+        newStudent.famrel,
+        newStudent.freetime,
+        newStudent.goout,
+        newStudent.Dalc,
+        newStudent.Walc,
+        newStudent.health,
+        newStudent.absences,
+        newStudent.G1,
+        newStudent.G2,
+        newStudent.G3
+      ], 
+      function (err) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+  
+        // Respond with the information of the newly created student
+        res.json({
+          success: true,
+          message: 'Student created successfully',
+          student: {
+            id: this.lastID,
+            ...newStudent  
+          }
+        });
+      }
+    );
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
