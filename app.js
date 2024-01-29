@@ -40,6 +40,18 @@ app.get('/api/students', (req, res) => {
     });
   });
 
+// API for students by school
+app.get('/api/students/by-school/:school', (req, res) => {
+    const { school } = req.params;
+    db.all('SELECT * FROM Student WHERE school = ?', [school], (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ students: rows });
+    });
+  });  
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
