@@ -64,6 +64,22 @@ app.get('/api/students/by-gender/:gender', (req, res) => {
     });
   });
 
+// API for performance data for a specific student.
+app.get('/api/performance/:studentId', (req, res) => {
+    const { studentId } = req.params;
+  
+    // Fetch performance data for the specific student
+    db.get('SELECT G1, G2, G3 FROM Student WHERE id = ?', [studentId], (err, row) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+  
+      // Respond with the performance data for the specific student
+      res.json({ performanceData: row });
+    });
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
