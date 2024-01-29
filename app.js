@@ -163,6 +163,81 @@ app.post('/api/students', (req, res) => {
     );
   });
 
+// Update details of a specific student
+app.put('/api/students/:id', (req, res) => {
+    const studentId = req.params.id;
+    const updatedStudent = req.body;
+  
+    // Validate that the required information is present in the request body
+    if (!updatedStudent.school || !updatedStudent.sex || !updatedStudent.age) {
+      res.status(400).json({ error: 'Required information (school, sex, age) is missing for updating the student' });
+      return;
+    }
+  
+    // Update the details of the specific student in the database
+    db.run(
+      'UPDATE Student SET school = ?, sex = ?, age = ?, address = ?, famsize = ?, Pstatus = ?, Medu = ?, Fedu = ?, Mjob = ?, Fjob = ?, reason = ?, guardian = ?, traveltime = ?, studytime = ?, failures = ?, schoolsup = ?, famsup = ?, paid = ?, activities = ?, nursery = ?, higher = ?, internet = ?, romantic = ?, famrel = ?, freetime = ?, goout = ?, Dalc = ?, Walc = ?, health = ?, absences = ?, G1 = ?, G2 = ?, G3 = ? WHERE id = ?',
+      [
+        updatedStudent.school,
+        updatedStudent.sex,
+        updatedStudent.age,
+        updatedStudent.address,
+        updatedStudent.famsize,
+        updatedStudent.Pstatus,
+        updatedStudent.Medu,
+        updatedStudent.Fedu,
+        updatedStudent.Mjob,
+        updatedStudent.Fjob,
+        updatedStudent.reason,
+        updatedStudent.guardian,
+        updatedStudent.traveltime,
+        updatedStudent.studytime,
+        updatedStudent.failures,
+        updatedStudent.schoolsup,
+        updatedStudent.famsup,
+        updatedStudent.paid,
+        updatedStudent.activities,
+        updatedStudent.nursery,
+        updatedStudent.higher,
+        updatedStudent.internet,
+        updatedStudent.romantic,
+        updatedStudent.famrel,
+        updatedStudent.freetime,
+        updatedStudent.goout,
+        updatedStudent.Dalc,
+        updatedStudent.Walc,
+        updatedStudent.health,
+        updatedStudent.absences,
+        updatedStudent.G1,
+        updatedStudent.G2,
+        updatedStudent.G3,
+        studentId
+      ], 
+      function (err) {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+  
+        // Check if any rows were affected
+        if (this.changes === 0) {
+          res.status(404).json({ error: 'Student not found' });
+          return;
+        }
+  
+        // Respond with the information of the updated student
+        res.json({
+          success: true,
+          message: 'Student details updated successfully',
+          student: {
+            id: studentId,
+            ...updatedStudent  // Include other fields if needed
+          }
+        });
+      }
+    );
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
