@@ -307,6 +307,17 @@ app.get('/api/average-scores', (req, res) => {
     });
 });
 
+// API for performance by gender
+app.get('/api/performance-by-gender', (req, res) => {
+    db.all('SELECT sex, AVG(G1) AS avgG1, AVG(G2) AS avgG2, AVG(G3) AS avgG3 FROM Student GROUP BY sex', (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ performanceByGender: rows });
+    });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
