@@ -29,6 +29,17 @@ app.get('/api/schools', (req, res) => {
     });
   });
 
+// API for all students
+app.get('/api/students', (req, res) => {
+    db.all('SELECT * FROM Student', (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ students: rows });
+    });
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
