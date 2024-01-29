@@ -18,6 +18,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Schools API endpoint
+app.get('/api/schools', (req, res) => {
+    db.all('SELECT DISTINCT school FROM Student', (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ schools: rows.map(row => row.school) });
+    });
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
