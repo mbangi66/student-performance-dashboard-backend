@@ -52,6 +52,18 @@ app.get('/api/students/by-school/:school', (req, res) => {
     });
   });  
 
+// API for students by gender
+app.get('/api/students/by-gender/:gender', (req, res) => {
+    const { gender } = req.params;
+    db.all('SELECT * FROM Student WHERE sex = ?', [gender], (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ students: rows });
+    });
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
