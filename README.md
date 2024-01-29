@@ -2,15 +2,6 @@
 
 This repository contains the backend code for the Student Performance Dashboard, an application designed to manage and analyze student performance data. The backend is built using Node.js, Express, and SQLite.
 
-## Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
 
 - Retrieve average scores for all students.
