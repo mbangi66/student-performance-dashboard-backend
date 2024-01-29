@@ -264,6 +264,38 @@ db.run('DELETE FROM Student WHERE id = ?', [studentId], function (err) {
 });
 });
 
+// API for students by multiple criteria
+app.post('/api/students/filter', (req, res) => {
+    const { criteria } = req.body;
+  
+    // Define an SQL query string based on the provided criteria
+    let sql = 'SELECT * FROM Student WHERE 1=1';
+    const params = [];
+  
+    // Check if criteria are provided and append them to the query
+    if (criteria) {
+      if (criteria.school) {
+        sql += ' AND school = ?';
+        params.push(criteria.school);
+      }
+      if (criteria.gender) {
+        sql += ' AND sex = ?';
+        params.push(criteria.gender);
+      }
+  
+      // Execute the query
+      db.all(sql, params, (err, rows) => {
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+        res.json({ filteredStudents: rows });
+      });
+    } else {
+      res.status(400).json({ error: 'Criteria not provided' });
+    }
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
