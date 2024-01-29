@@ -29,7 +29,7 @@ npm start
 
 The server will be accessible at http://localhost:3000.
 
-# API Endpoints
+## API Endpoints
 
 `GET /api/average-scores:` Get average scores for all students.
 `GET /api/schools:` Get a list of all schools.
