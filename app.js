@@ -238,6 +238,32 @@ app.put('/api/students/:id', (req, res) => {
     );
   });
 
+// Delete a specific student
+app.delete('/api/students/:id', (req, res) => {
+  const studentId = req.params.id;
+
+// Delete the specific student from the database
+db.run('DELETE FROM Student WHERE id = ?', [studentId], function (err) {
+    if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+    }
+
+    // Check if any rows were affected
+    if (this.changes === 0) {
+        res.status(404).json({ error: 'Student not found' });
+        return;
+    }
+
+    // Respond with a success message
+    res.json({
+        success: true,
+        message: 'Student deleted successfully',
+        studentId: studentId
+    });
+});
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
