@@ -296,6 +296,17 @@ app.post('/api/students/filter', (req, res) => {
     }
 });
 
+// API for Average Scores
+app.get('/api/average-scores', (req, res) => {
+    db.get('SELECT AVG(G1) AS avgG1, AVG(G2) AS avgG2, AVG(G3) AS avgG3 FROM Student', (err, row) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ averageScores: row });
+    });
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
