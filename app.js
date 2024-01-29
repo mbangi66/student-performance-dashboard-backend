@@ -80,6 +80,22 @@ app.get('/api/performance/:studentId', (req, res) => {
     });
   });
 
+// Get performance data for all students in a specific school.
+app.get('/api/schools/:id/performance', (req, res) => {
+    const { id } = req.params;
+  
+    // Fetch performance data for all students in the specific school
+    db.all('SELECT G1, G2, G3 FROM Student WHERE school = ?', [id], (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+  
+      // Respond with the performance data for all students in the specific school
+      res.json({ performanceData: rows });
+    });
+  });
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
