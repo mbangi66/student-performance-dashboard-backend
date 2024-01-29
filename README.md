@@ -29,17 +29,18 @@ npm start
 
 The server will be accessible at http://localhost:3000.
 
-API Endpoints
-GET /api/average-scores: Get average scores for all students.
-GET /api/schools: Get a list of all schools.
-GET /api/schools/:id/students: Get a list of students for a specific school.
-GET /api/performance-by-gender: Get performance data based on gender.
-GET /api/students: Get all students.
-POST /api/students: Create a new student.
-GET /api/students/by-school/:school: Get students for a specific school.
-GET /api/students/by-gender/:gender: Get students based on gender.
-GET /api/performance/:studentId: Get performance data for a specific student.
-GET /api/schools/:id/performance: Get performance data for all students in a specific school.
-POST /api/students/filter: Filter students based on multiple criteria.
-PUT/PATCH /api/students/:id: Update details of a specific student.
-DELETE /api/students/:id: Delete a specific student.
+# API Endpoints
+
+`GET /api/average-scores:` Get average scores for all students.
+`GET /api/schools:` Get a list of all schools.
+`GET /api/schools/:id/students:` Get a list of students for a specific school.
+`GET /api/performance-by-gender:` Get performance data based on gender.
+`GET /api/students:` Get all students.
+`POST /api/students:` Create a new student.
+`GET /api/students/by-school/:school:` Get students for a specific school.
+`GET /api/students/by-gender/:gender:` Get students based on gender.
+`GET /api/performance/:studentId:` Get performance data for a specific student.
+`GET /api/schools/:id/performance:` Get performance data for all students in a specific school.
+`POST /api/students/filter:` Filter students based on multiple criteria.
+`PUT/PATCH /api/students/:id:` Update details of a specific student.
+`DELETE /api/students/:id:` Delete a specific student.
