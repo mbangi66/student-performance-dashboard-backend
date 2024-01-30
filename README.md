@@ -43,3 +43,5 @@ The server will be accessible at http://localhost:3000.
 * `POST /api/students/filter:` Filter students based on multiple criteria.
 * `PUT/PATCH /api/students/:id:` Update details of a specific student.
 * `DELETE /api/students/:id:` Delete a specific student.
+* `GET /api/score-distributions:` Get data for score distributions.
+* `GET /api/performance-by-parental-education:` Get performance data based on parental education level.
