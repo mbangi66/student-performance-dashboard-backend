@@ -54,10 +54,12 @@ CREATE TABLE IF NOT EXISTS Student (
       console.log('Student table created successfully'); 
    }
 });
+
 // Read data from CSV file and insert into Student table
 fs.createReadStream('student-por.csv')
 .pipe(csvParser())
 .on('data', (row) => {
+
    // Explicitly specify columns in the INSERT query
    const columns = Object.keys(row).join(', ');
    const placeholders = Object.keys(row).map(column => `:${column}`);
@@ -74,8 +76,7 @@ fs.createReadStream('student-por.csv')
          console.log(`Data inserted into Student table successfully: ${JSON.stringify(row)}`);
       }
    });
-})
-.on('end', () => {
+}).on('end', () => {
    // Close the database connection after data import
    db.close();
 });
