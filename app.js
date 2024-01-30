@@ -114,6 +114,18 @@ app.get('/api/performance-by-parental-education', (req, res) => {
   });
 });
 
+// API for Visualization of Score Distributions
+app.get('/api/score-distributions', (req, res) => {
+  // Fetch scores for each subject
+  db.all('SELECT G1, G2, G3 FROM Student', (err, rows) => {
+      if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+      }
+      res.json({ scoreDistributions: rows });
+  });
+});
+
 // Create a new student
 app.post('/api/students', (req, res) => {
     const newStudent = req.body;
