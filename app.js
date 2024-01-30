@@ -90,18 +90,6 @@ app.get('/api/schools/:id/performance', (req, res) => {
     });
 });
 
-// Fetch data and calculate average scores based on lunch type
-app.get('/api/performance-by-lunch', (req, res) => {
-    // Calculate average scores based on lunch type
-    db.all('SELECT lunch, AVG(G1) AS avgG1, AVG(G2) AS avgG2, AVG(G3) AS avgG3 FROM Student GROUP BY lunch', (err, rows) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-            return;
-        }
-        res.json({ impactByLunch: rows });
-    });
-});
-
 //API for Impact of Parental Education Level
 app.get('/api/performance-by-parental-education', (req, res) => {
   // Calculate average scores based on parental education level
