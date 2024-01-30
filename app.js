@@ -90,8 +90,8 @@ app.get('/api/schools/:id/performance', (req, res) => {
     });
 });
 
+// Fetch data and calculate average scores based on lunch type
 app.get('/api/performance-by-lunch', (req, res) => {
-    // Fetch data and calculate impact
     // Calculate average scores based on lunch type
     db.all('SELECT lunch, AVG(G1) AS avgG1, AVG(G2) AS avgG2, AVG(G3) AS avgG3 FROM Student GROUP BY lunch', (err, rows) => {
         if (err) {
@@ -102,6 +102,17 @@ app.get('/api/performance-by-lunch', (req, res) => {
     });
 });
 
+//API for Impact of Parental Education Level
+app.get('/api/performance-by-parental-education', (req, res) => {
+  // Calculate average scores based on parental education level
+  db.all('SELECT Medu, Fedu, AVG(G1) AS avgG1, AVG(G2) AS avgG2, AVG(G3) AS avgG3 FROM Student GROUP BY Medu, Fedu', (err, rows) => {
+      if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+      }
+      res.json({ impactByParentalEducation: rows });
+  });
+});
 
 // Create a new student
 app.post('/api/students', (req, res) => {
